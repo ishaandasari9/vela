@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vela Coffee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0805;
+      color: #f0ece4;
+      font-family: 'Cormorant Garamond', serif;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.3em;
+      color: #f0ece4;
+      opacity: 0.6;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #f0ece4;
+      opacity: 0.5;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-word-top {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 18vw, 14rem);
+      letter-spacing: 0.05em;
+      line-height: 0.85;
+      color: #f0ece4;
+      z-index: 2;
+      animation: fadeUp 1s ease forwards;
+      opacity: 0;
+      animation-delay: 0.1s;
+    }
+
+    .bag-container {
+      position: relative;
+      width: clamp(200px, 35vw, 420px);
+      height: clamp(220px, 38vw, 460px);
+      z-index: 3;
+      opacity: 0;
+      animation: floatBag 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, gentleFloat 6s ease-in-out infinite;
+      animation-delay: 0.3s, 1.7s;
+    }
+
+    .bag-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transform: rotate(-4deg);
+      mix-blend-mode: lighten;
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.9));
+    }
+
+    .hero-word-bottom {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 18vw, 14rem);
+      letter-spacing: 0.05em;
+      line-height: 0.85;
+      color: #f0ece4;
+      z-index: 2;
+      animation: fadeUp 1s ease forwards;
+      opacity: 0;
+      animation-delay: 0.5s;
+    }
+
+    .hero-sub {
+      margin-top: 2.5rem;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #a09070;
+      letter-spacing: 0.05em;
+      text-align: center;
+      max-width: 320px;
+      animation: fadeUp 1s ease forwards;
+      opacity: 0;
+      animation-delay: 0.7s;
+    }
+
+    .cta-row {
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      animation: fadeUp 1s ease forwards;
+      opacity: 0;
+      animation-delay: 0.9s;
+    }
+
+    .cta-btn {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #0a0805;
+      background: #f0ece4;
+      border: none;
+      padding: 1rem 2.5rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: #c8a96e;
+      transform: translateY(-2px);
+    }
+
+    .cta-note {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #504030;
+    }
+
+    /* ORIGINS */
+    .origin-band {
+      padding: 5rem 3rem;
+      border-top: 0.5px solid #1e1a14;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .origin-item {
+      padding: 2.5rem;
+      border-right: 0.5px solid #1e1a14;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.4s;
+    }
+
+    .origin-item:last-child { border-right: none; }
+    .origin-item:hover { background: #110e09; }
+
+    .origin-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      color: #1e1a14;
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: color 0.4s;
+    }
+
+    .origin-item:hover .origin-num { color: #c8a96e; }
+
+    .origin-country {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      color: #f0ece4;
+      margin-bottom: 0.5rem;
+    }
+
+    .origin-desc {
+      font-size: 0.9rem;
+      font-style: italic;
+      color: #706050;
+      line-height: 1.6;
+    }
+
+    .origin-dot {
+      position: absolute;
+      top: 2.5rem; right: 2.5rem;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #c8a96e;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .origin-item:hover .origin-dot { opacity: 1; }
+
+    /* FLAVOR */
+    .flavor-section {
+      padding: 6rem 3rem;
+      border-top: 0.5px solid #1e1a14;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+
+    .flavor-text { max-width: 380px; }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #504030;
+      margin-bottom: 1.5rem;
+    }
+
+    .flavor-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      letter-spacing: 0.05em;
+      line-height: 0.9;
+      color: #f0ece4;
+      margin-bottom: 1.5rem;
+    }
+
+    .flavor-body {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #706050;
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .flavor-tags {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .flavor-tag {
+      padding: 1.25rem 2rem;
+      border: 0.5px solid #1e1a14;
+      border-bottom: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: #504030;
+      cursor: pointer;
+      transition: all 0.3s;
+      min-width: 240px;
+    }
+
+    .flavor-tag:last-child { border-bottom: 0.5px solid #1e1a14; }
+
+    .flavor-tag.active, .flavor-tag:hover {
+      background: #1e1a14;
+      color: #c8a96e;
+      border-color: #c8a96e;
+      padding-left: 2.5rem;
+    }
+
+    /* MANIFESTO */
+    .manifesto {
+      padding: 8rem 3rem;
+      border-top: 0.5px solid #1e1a14;
+      text-align: center;
+    }
+
+    .manifesto-text {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #f0ece4;
+      line-height: 1.4;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+
+    .manifesto-text em { color: #c8a96e; font-style: normal; }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 0.5px solid #1e1a14;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.3em;
+      color: #504030;
+    }
+
+    .footer-note {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #302820;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatBag {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .origin-band { grid-template-columns: 1fr; }
+      .origin-item { border-right: none; border-bottom: 0.5px solid #1e1a14; }
+      .origin-item:last-child { border-bottom: none; }
+      .flavor-section { flex-direction: column; gap: 2.5rem; padding: 4rem 1.5rem; }
+      .flavor-tags { width: 100%; }
+      .flavor-tag { min-width: unset; }
+      .manifesto { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">Vela</span>
+    <ul class="nav-links">
+      <li><a href="#origins">Origins</a></li>
+      <li><a href="#flavors">Process</a></li>
+      <li><a href="#subscribe">Subscribe</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-word-top">VELA</div>
+    <div class="bag-container">
+      <img class="bag-img" src="/assets/hero-bag.png" alt="Vela coffee bag" />
+    </div>
+    <div class="hero-word-bottom">COFFEE</div>
+    <p class="hero-sub">Something the algorithm hasn't touched yet.</p>
+    <div class="cta-row">
+      <button class="cta-btn" onclick="document.getElementById('subscribe').scrollIntoView({behavior:'smooth'})">Start Your Subscription</button>
+      <span class="cta-note">From £22 / month</span>
+    </div>
+  </section>
+
+  <section class="origin-band" id="origins">
+    <div class="origin-item">
+      <div class="origin-dot"></div>
+      <div class="origin-num">01</div>
+      <div class="origin-country">Ethiopia</div>
+      <p class="origin-desc">Yirgacheffe. Jasmine and stone fruit. A farm that's been in one family since 1961.</p>
+    </div>
+    <div class="origin-item">
+      <div class="origin-dot"></div>
+      <div class="origin-num">02</div>
+      <div class="origin-country">Colombia</div>
+      <p class="origin-desc">Huila. Dark chocolate and brown sugar. Grown at 1,900 metres by twelve farmers.</p>
+    </div>
+    <div class="origin-item">
+      <div class="origin-dot"></div>
+      <div class="origin-num">03</div>
+      <div class="origin-country">Indonesia</div>
+      <p class="origin-desc">Sulawesi. Earthy and cedar. The kind of coffee people build a morning ritual around.</p>
+    </div>
+  </section>
+
+  <section class="flavor-section" id="flavors">
+    <div class="flavor-text">
+      <p class="section-label">This month's selection</p>
+      <h2 class="flavor-headline">Yirgacheffe<br>Natural</h2>
+      <p class="flavor-body">Picked at peak ripeness on the Adame family farm. Dried on raised beds for 21 days. No intervention. The fruit does what it wants.</p>
+    </div>
+    <div class="flavor-tags">
+      <div class="flavor-tag active">Jasmine + Blueberry</div>
+      <div class="flavor-tag">Apricot + Bergamot</div>
+      <div class="flavor-tag">Dark Chocolate + Cedar</div>
+      <div class="flavor-tag">Brown Sugar + Plum</div>
+    </div>
+  </section>
+
+  <section class="manifesto" id="subscribe">
+    <p class="manifesto-text">
+      No blends. No supermarket shelf.<br>
+      One farm. One harvest.<br>
+      <em>Yours.</em>
+    </p>
+    <button class="cta-btn">Subscribe — £22 / month</button>
+  </section>
+
+  <footer>
+    <span class="footer-logo">Vela Coffee</span>
+    <span class="footer-note">Single origin · Monthly · Ethically sourced</span>
+  </footer>
+
+  <script>
+    const tags = document.querySelectorAll('.flavor-tag');
+    tags.forEach(tag => {
+      tag.addEventListener('click', () => {
+        tags.forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
